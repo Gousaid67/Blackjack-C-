@@ -62,9 +62,21 @@ namespace BlackJack
             {
                 int decklength = deck.Count;
                 int[] randused = new int[decklength];
-                int nextrand;
+                
                 Card[] ShuffleList = deck.ToArray();
                 deck.Clear();
+                for(int x = 0; x < ShuffleList.Length; x++)
+                {
+                
+                    int nextrand = rand.Next(0, ShuffleList.Length);
+                    if(Array.Find(randused, x => x == nextrand) == nextrand)
+                    {
+                        x--;
+                        continue;
+                    }
+                    deck.Enqueue(ShuffleList[nextrand]);
+                }
+                return deck; 
                 
 
             }
@@ -73,6 +85,19 @@ namespace BlackJack
                 Queue<Card> NewDeck = new Queue<Card>();
                 int decklength = list.Count;
                 int[] randused = new int[decklength];
+                for (int x = 0; x < decklength; x++)
+                {
+
+                    int nextrand = rand.Next(0, decklength);
+                    if (Array.Find(randused, x => x == nextrand) == nextrand)
+                    {
+                        x--;
+                        continue;
+                    }
+                    NewDeck.Enqueue(list[nextrand]);
+                
+                }
+                return NewDeck; 
             }
         }
         public enum SuitType
