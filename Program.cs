@@ -8,6 +8,7 @@ namespace BlackJack
         List<Player> Playerlist = new List<Player>();
         Dealer dealer = new Dealer();
         Deck deck;
+        
         public Game()
         {
             deck = new Deck();
@@ -16,17 +17,22 @@ namespace BlackJack
         {
             List<Card> CardList = new List<Card>();
             Card LastDrawn;
-            public virtual void Draw()
-            {
+            int lowvalue, highvalue, bestvalue;
 
+            public void Draw(Deck deck)
+            {
+                Card selcard = deck.Draw();
+                LastDrawn = selcard;
+                CardList.Add(selcard);
             }
+            
 
         }
         class Dealer : Player
         {
 
         }
-        class Card
+        public class Card
         {
             CardType Value;
             SuitType suittype;
@@ -43,7 +49,7 @@ namespace BlackJack
         {
             Random rand = new Random();
            List<Card> CardList = new List<Card>(52); //used for shuffling and resetting the Deck.
-           Queue<Card> CardDeck = new Queue<Card>();
+           public Queue<Card> CardDeck = new Queue<Card>();
 
             public Deck()
             {
@@ -58,7 +64,11 @@ namespace BlackJack
                 
                 
             }
-            Queue<Card> Shuffle(Queue<Card> deck)
+            public Card Draw()
+            {
+                return CardDeck.Dequeue();
+            }
+            public Queue<Card> Shuffle(Queue<Card> deck)
             {
                 int decklength = deck.Count;
                 int[] randused = new int[decklength];
@@ -80,7 +90,7 @@ namespace BlackJack
                 
 
             }
-            Queue<Card> ResetAndShuffle(List<Card> list)
+            public Queue<Card> ResetAndShuffle(List<Card> list)
             {
                 Queue<Card> NewDeck = new Queue<Card>();
                 int decklength = list.Count;
